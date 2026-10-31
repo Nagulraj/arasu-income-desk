@@ -8,15 +8,15 @@ function storage(){const map=new Map();return {getItem:k=>map.get(k)||null,setIt
 globalThis.localStorage=storage();globalThis.sessionStorage=storage();globalThis.setTimeout=()=>0;globalThis.confirm=()=>true;
 let passed=0;function check(ok,name){if(!ok)throw Error(name);passed++;}const event={preventDefault(){}};
 await import('../dist/app.js');
-check(get('#app').innerHTML.includes('login-form'),'Tamil login renders');
+check(get('#app').innerHTML.includes('login-form'),'English login renders');
 get('#email').value='wrong@example.com';get('#password').value='wrong';get('#login-form').onsubmit(event);check(get('#login-error').textContent.length>0,'invalid credentials show error');
 get('#email').value='officer@arasu.demo';get('#password').value='Demo@123';get('#login-form').onsubmit(event);
-check(get('#app').innerHTML.includes('விண்ணப்பப் பட்டியல்'),'queue renders after login');check(get('#app').innerHTML.includes('AI ஆய்வு உதவி'),'assistance panel renders');
+check(get('#app').innerHTML.includes('Application queue'),'queue renders after login');check(get('#app').innerHTML.includes('AI review assistance'),'assistance panel renders');
 function click(attr,value){const b=document.querySelectorAll(`[data-${attr}]`).find(b=>b.dataset[attr]===value);check(!!b,`button ${attr}=${value} exists`);b.onclick();}
-click('tab','documents');check(get('#app').innerHTML.includes('data-doc="address"'),'document tab lists evidence');click('doc','address');check(get('#document').open,'document preview opens');check(get('#document-content').innerHTML.includes('மாதிரி / SAMPLE'),'sample watermark');get('#close-document').onclick();
-click('action','returned');check(get('#decision').open,'decision confirmation opens');get('#reason').value='வருமான ஆதாரம் இணைக்கப்படாததால் ஆவணத்தை கோருகிறேன்.';get('#verified').checked=true;get('#decision-form').onsubmit(event);
+click('tab','documents');check(get('#app').innerHTML.includes('data-doc="address"'),'document tab lists evidence');click('doc','address');check(get('#document').open,'document preview opens');check(get('#document-content').innerHTML.includes('DEMO / SAMPLE'),'sample watermark');get('#close-document').onclick();
+click('action','returned');check(get('#decision').open,'decision confirmation opens');get('#reason').value='Please attach the missing income evidence.';get('#verified').checked=true;get('#decision-form').onsubmit(event);
 check(!get('#decision').open,'decision confirmation closes');const saved=JSON.parse(localStorage.getItem('arasu-demo-v1'));check(saved[0].status==='returned'&&saved[0].history.length===1,'decision and reason saved');
-click('view','history');check(get('#app').innerHTML.includes('வருமான ஆதாரம் இணைக்கப்படாததால்'),'history displays reason');
+click('view','history');check(get('#app').innerHTML.includes('Please attach the missing income evidence.'),'history displays reason');
 click('view','guide');check(get('#app').innerHTML.includes('OCR'),'guide explains limitations');
 get('#logout').onclick();check(get('#app').innerHTML.includes('login-form'),'logout returns to login');
 console.log(`${passed} UI interaction assertions passed (mock DOM; not browser QA)`);

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Tamil income certificate officer review UI prototype",
+  "description": "English income certificate officer review UI prototype",
   "scripts": {
     "start": "python3 -m http.server 4173 --bind 127.0.0.1 --directory dist",
     "test": "node tests/domain.test.js && node tests/ui.test.js"
